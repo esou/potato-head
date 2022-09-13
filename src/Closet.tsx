@@ -19,8 +19,8 @@ const Closet: React.FC<Props> = ({ accessories }) => {
 
 const ClosetContainer = styled.div`
   border: 1px solid black;
-  margin: 1rem;
   padding: 2rem;
+  margin-top: 1rem;
   display: flex;
 `
 

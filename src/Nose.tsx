@@ -6,10 +6,14 @@ import { DraggableType } from './Hole'
 interface Props {
   id: string
   color?: string
+  mustache?: boolean
 }
-const Nose: React.FC<Props> = ({ id, color = '#8B6D52' }) => {
-  const width = 55
-  const heigth = 36
+const Nose: React.FC<Props> = ({ id, color = '#8B6D52', mustache }) => {
+  const width = 55 //62
+  const heigth = 36 //54
+
+  const svgWidth = mustache ? width + 7 : width
+  const svgHeigth = mustache ? heigth + 18 : heigth
   const ref = React.useRef<HTMLDivElement>(null)
   const [, drag] = useDrag({
     type: DraggableType.nose,
@@ -19,9 +23,9 @@ const Nose: React.FC<Props> = ({ id, color = '#8B6D52' }) => {
   return (
     <NoseContainer width={width} height={heigth} ref={ref}>
       <svg
-        width={width}
-        height={heigth}
-        viewBox={`0 0 ${width} ${heigth}`}
+        width={svgWidth}
+        height={svgHeigth}
+        viewBox={`0 0 ${svgWidth} ${svgHeigth}`}
         fill='none'
         xmlns='http://www.w3.org/2000/svg'
       >
@@ -37,6 +41,12 @@ const Nose: React.FC<Props> = ({ id, color = '#8B6D52' }) => {
           d='M55 27C55 31.9706 50.0751 36 44 36C37.9249 36 33 31.9706 33 27C33 22.0294 37.9249 18 44 18C50.0751 18 55 22.0294 55 27Z'
           fill={color}
         />
+        {mustache && (
+          <path
+            d='M31 36L40.5 38.5L48.5 43L56 47.5L61.3109 53.25L31 47.5L0.689117 53.25L6.5 47L14 42.5L22 38L31 36Z'
+            fill='black'
+          />
+        )}
       </svg>
     </NoseContainer>
   )
