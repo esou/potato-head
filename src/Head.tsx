@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { Hole } from './Hole'
+import { DraggableType, Hole } from './Hole'
 
 interface Props {
   width: number
@@ -21,9 +21,24 @@ const Head: React.FC<Props> = ({ width, height }) => {
           fillOpacity='0.6'
         />
       </svg>
-      <Hole height={height} width={width} y={0.3} />
-      <Hole height={height} width={width} y={0.5} tempHasNose />
-      <Hole height={height} width={width} y={0.7} />
+      <Hole
+        height={height}
+        width={width}
+        y={0.3}
+        dropType={DraggableType.eyes}
+      />
+      <Hole
+        height={height}
+        width={width}
+        y={0.5}
+        dropType={DraggableType.nose}
+      />
+      <Hole
+        height={height}
+        width={width}
+        y={0.7}
+        dropType={DraggableType.mouth}
+      />
     </HeadContainer>
   )
 }

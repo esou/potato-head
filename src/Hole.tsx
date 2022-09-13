@@ -1,19 +1,48 @@
+import React from 'react'
+import { useDrop } from 'react-dnd'
 import styled from 'styled-components'
-import { Nose } from './Nose'
+import { potatoHeadAccessories } from './App'
 
+export enum DraggableType {
+  eyes = 'eyes',
+  nose = 'nose',
+  mouth = 'mouth',
+}
 interface Props {
   height: number
   width: number
   y: number
   tempHasNose?: boolean
-  dropType?: 'eyes' | 'nose' | 'mouth'
+  dropType?: DraggableType
+  item?: React.ReactNode
 }
 
-const Hole: React.FC<Props> = ({ height, width, y, tempHasNose }) => {
+const Hole: React.FC<Props> = ({ height, width, y, item, dropType }) => {
+  const [currentItem, setCurrentItem] = React.useState(item)
+  const ref = React.useRef<HTMLDivElement>(null)
+
   const left = width / 2
   const top = height * y
+
+  const [, drop] = useDrop({
+    accept: dropType ? dropType : Object.values(DraggableType),
+    drop: (item: { id: string }) => {
+      const newItem = potatoHeadAccessories.find(
+        (accessory) => accessory.id === item.id
+      )
+
+      if (newItem) {
+        setCurrentItem(newItem.component)
+        // remove item from closet
+      } else {
+        //push item to closet
+      }
+    },
+  })
+
+  drop(ref)
   return (
-    <HolePositioner left={left} top={top}>
+    <HolePositioner left={left} top={top} ref={ref}>
       <svg
         width='10'
         height='10'
@@ -23,7 +52,7 @@ const Hole: React.FC<Props> = ({ height, width, y, tempHasNose }) => {
       >
         <circle cx='5' cy='5' r='5' fill='#584432' />
       </svg>
-      {tempHasNose && <Nose />}
+      {currentItem}
     </HolePositioner>
   )
 }
